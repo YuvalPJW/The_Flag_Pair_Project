@@ -1,4 +1,5 @@
 
+import pygame
 
 #gameboard
 BOARD_ROWS = 25
@@ -11,15 +12,17 @@ WINDOW_HEIGHT = BOARD_ROWS * CELL_SIZE
 
 #solider
 SOLDIER_ROWS = 4
-SOLDIER_COLS = 2
+SOLDIER_COLS = 3
 SOLDIER_BODY_ROWS = 3 # the upper part
 SOLDIER_FEET_ROWS = 1 # the lower part
 SOLDIER_START = 0, 0
 SOLDIER_MOVE = 0, 0
+DAY_SOLDIER = "soldier.png"
+NIGHT_SOLDIER = "soldier_night.png"
 
 
 #flag
-FLAG_ROWS = 3
+FLAG_ROWS = 4
 FLAG_COLS = 4
 
 flag_row = BOARD_ROWS - FLAG_ROWS
@@ -40,13 +43,8 @@ LOSE_STATE = 2
 WIN_STATE = 3
 
 #colors
-RED = (255, 89, 94)
-GREEN = (138, 201, 38)
-BLUE = (25, 130, 196)
-ORANGE = (255, 202, 58)
-VIOLET = (106, 76, 147)
+GREEN = (34,139,34)
 BLACK = (0, 0, 0)
-BACKGROUND_COLOR = (254, 252, 252)
 
 #message
 FONT_NAME = "Calibri"
@@ -58,7 +56,7 @@ LOSE_LOCATION = \
 
 WIN_MESSAGE = "You Won!"
 WIN_FONT_SIZE = LOSE_FONT_SIZE
-WIN_COLOR = (89, 89, 89)
+WIN_COLOR = (252, 252, 252)
 WIN_LOCATION = \
     (0.2 * WINDOW_WIDTH, WINDOW_HEIGHT / 2 - (WIN_FONT_SIZE / 2))
 

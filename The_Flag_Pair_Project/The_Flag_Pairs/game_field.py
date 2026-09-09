@@ -39,14 +39,4 @@ def mines_where():
             col_idx += 1
         col_idx = 0
         row_idx += 1
-    print(mine_location_list)
-    print()
-    print_matrix(field)
-
-def print_matrix(matrix):
-    for row in matrix:
-        for item in row:
-            print(item, end=' ')
-        print()
-
 

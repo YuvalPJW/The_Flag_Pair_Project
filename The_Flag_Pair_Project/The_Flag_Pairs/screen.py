@@ -1,4 +1,4 @@
-
+import asyncio
 
 import pygame
 import consts
@@ -39,9 +39,6 @@ def draw_grass(grass_location):
     img = pygame.transform.scale(img, consts.GRASS_SIZE)
     screen.blit(img, grass_location)
 
-def draw_field(grass_list):
-    for grass in grass_list:
-        draw_grass(grass)
 
 def draw_mines():
     for i in range(consts.BOARD_ROWS):
@@ -52,11 +49,6 @@ def draw_mines():
                 j += 3
             else:
                 j+=1
-
-def draw_minefield():
-    screen.fill(consts.BLACK)
-    draw_grid()
-    draw_mines()
 
 def draw_grid():
     for x in range(0, consts.WINDOW_WIDTH, consts.CELL_SIZE):
@@ -69,25 +61,30 @@ def draw_mine(mine_location):
     img = pygame.transform.scale(img, (consts.MINE_COLS*consts.CELL_SIZE, consts.MINE_ROWS*consts.CELL_SIZE))
     screen.blit(img, mine_location)
 
-def draw_soldier(soldier_loc):
-    img = pygame.image.load("soldier.png").convert_alpha()
+def draw_soldier(soldier_loc, soldier_state):
+    img = pygame.image.load(soldier_state).convert_alpha()
     img = pygame.transform.scale(img, (consts.SOLDIER_COLS*consts.CELL_SIZE, consts.SOLDIER_ROWS*consts.CELL_SIZE))
     screen.blit(img, (soldier_loc[1]*consts.CELL_SIZE, soldier_loc[0]*consts.CELL_SIZE))
 
-def draw_game(game_state):
+def draw_minefield(game_state):
+    screen.fill(consts.BLACK)
+    draw_grid()
+    draw_mines()
+    draw_soldier(game_state["soldier_location"], game_state["soldier_mode"])
 
+    pygame.display.flip()
+
+def draw_field(game_state):
     screen.fill(consts.GREEN)
-    draw_field(game_field.grass_location_list)
 
-    # if game_state["show_mines"]:
-    draw_minefield()
-
-    draw_welcome(game_state["welcome"])
-
-    draw_soldier(game_state["soldier_location"])
-    # soldier.draw()
+    for grass in game_field.grass_location_list:
+        draw_grass(grass)
 
     draw_flag()
+
+    draw_soldier(game_state["soldier_location"], game_state["soldier_mode"])
+
+    draw_welcome(game_state["welcome"])
 
     if game_state["state"] == consts.LOSE_STATE:
         draw_lose_message()
@@ -96,3 +93,5 @@ def draw_game(game_state):
         draw_win_message()
 
     pygame.display.flip()
+
+

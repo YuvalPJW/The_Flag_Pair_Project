@@ -1,10 +1,9 @@
-
-
 import pygame
 import consts
 import game_field
 import screen
 import soldier
+import time
 
 state = {
     "show_mines": False,
@@ -14,12 +13,12 @@ state = {
     "state": consts.RUNNING_STATE,
     "soldier_location": consts.SOLDIER_START,
     "soldier_is_moving": False,
-    "soldier_move": consts.SOLDIER_MOVE
+    "soldier_move": consts.SOLDIER_MOVE,
+    "soldier_mode": consts.DAY_SOLDIER
 }
 
 
 def main():
-
     pygame.init()
     game_field.create_field()
     game_field.place_grass()
@@ -28,8 +27,6 @@ def main():
     while state["is_window_open"]:
 
         handle_user_events()
-
-        screen.draw_game(state)
 
         if state["soldier_is_moving"]:
 
@@ -41,9 +38,19 @@ def main():
             if soldier.hit_flag(state["soldier_location"]):
                 state["state"] = consts.WIN_STATE
 
+        if state["show_mines"]:
+            state["soldier_mode"] = consts.NIGHT_SOLDIER
+            screen.draw_minefield(state)
+            pygame.time.wait(1000)
+            state["show_mines"] = False
+
+        else:
+            state["soldier_mode"] = consts.DAY_SOLDIER
+
+            screen.draw_field(state)
+
 
 def handle_user_events():
-
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
@@ -57,8 +64,6 @@ def handle_user_events():
                 if not state["showed_mines"]:
                     state["show_mines"] = True
                     state["showed_mines"] = True
-                    print(state["show_mines"])
-                    state["show_mines"] = False
 
             elif event.key == pygame.K_UP:
                 lst = list(state["soldier_move"])
@@ -86,14 +91,15 @@ def handle_user_events():
 
             state["welcome"] = False
 
+
 def move_soldier():
     lst = list(state["soldier_location"])
-    lst[0] +=state["soldier_move"][0]
-    lst[1]+=state["soldier_move"][1]
-    state["soldier_location"] = lst
+    lst[0] += state["soldier_move"][0]
+    lst[1] += state["soldier_move"][1]
+    if soldier.soldier_in_field(lst):
+        state["soldier_location"] = lst
     state["soldier_move"] = consts.SOLDIER_MOVE
     state["soldier_is_moving"] = False
-
 
 
 if __name__ == '__main__':
