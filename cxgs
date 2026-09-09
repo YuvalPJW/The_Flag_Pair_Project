@@ -1,0 +1,12 @@
+def draw_soldier(soldier_loc,soldier_state):
+    img = pygame.image.load(soldier_state).convert_alpha()
+    img = pygame.transform.scale(img, (consts.SOLDIER_COLS*consts.CELL_SIZE, consts.SOLDIER_ROWS*consts.CELL_SIZE))
+    screen.blit(img, (soldier_loc[1]*consts.CELL_SIZE, soldier_loc[0]*consts.CELL_SIZE))
+
+
+
+# def soldier_state(state):
+#     if state=='night':
+#         return 'solider_night.png'
+#     else:
+#         return 'soldier.png'
