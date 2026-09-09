@@ -28,3 +28,8 @@ MINES_COUNT = 20
 MINE_ROWS = 1
 MINE_COLS = 3
 
+start_time = time.clock()
+    end_time = start_time + lingertime
+    while time.clock() <= end_time:
+        obj.visible = True
+    obj.visible = False
