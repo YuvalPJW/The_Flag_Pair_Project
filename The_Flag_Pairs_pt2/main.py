@@ -3,7 +3,7 @@ import consts
 import game_field
 import screen
 import soldier
-import time
+import database
 
 state = {
     "show_mines": False,
@@ -14,7 +14,10 @@ state = {
     "soldier_location": consts.SOLDIER_START,
     "soldier_is_moving": False,
     "soldier_move": consts.SOLDIER_MOVE,
-    "soldier_mode": consts.DAY_SOLDIER
+    "soldier_mode": consts.DAY_SOLDIER,
+    "field": game_field.field,
+    "grass": game_field.grass_location_list,
+    "mines": game_field.mine_location_list
 }
 
 
@@ -60,6 +63,13 @@ def handle_user_events():
             continue
 
         if event.type == pygame.KEYDOWN:
+
+            if event.key == pygame.K_1:
+                database.save_game(state)
+            if event.key == pygame.K_2:
+                dict = database.load_game()
+                state.update(dict)
+
             if event.key == pygame.K_SPACE:
                 if not state["showed_mines"]:
                     state["show_mines"] = True
